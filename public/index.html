@@ -14,7 +14,7 @@
             loadingIndicator.style.display = "block"; // Show loading indicator
             
             output.innerHTML = "";
-            const response = await fetch('http://localhost:3002/search', {
+            const response = await fetch('http://localhost:3002/send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
