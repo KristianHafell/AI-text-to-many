@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="https://icons.veryicon.com/png/o/miscellaneous/form-icon/multi-line-text.png">
+    <title>Text to many</title>
+    <script>
+        async function search() {
+            const text = document.getElementById("query").value;
+            const loadingIndicator = document.getElementById("loading");
+            const output = document.getElementById("output");
+            
+            loadingIndicator.style.display = "block"; // Show loading indicator
+            
+            output.innerHTML = "";
+            const response = await fetch('http://localhost:3002/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text })
+            });
+            const result = await response.json();
+
+            loadingIndicator.style.display = "none"; // Hide loading indicator
+            
+            output.innerHTML = result;
+        }
+        handle = (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevents new line
+                search();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Text to many</h1>
+    <div class="search-container">
+        <textarea id="query" placeholder="Enter text here ..." onkeypress="handle(event)"></textarea>
+        <button onclick="search()" name="q">Send</button>
+    </div>
+    
+    <div id="loading">Loading<img src="https://cdn.pixabay.com/animation/2024/04/02/07/57/07-57-40-974_512.gif"/></div>
+    
+    <div id="output"></div>
+</body>
+</html>
