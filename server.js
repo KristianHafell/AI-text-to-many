@@ -1,12 +1,14 @@
 const express = require('express');
+const { getOutput } = require('./send/main-output');
 
 const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
-app.post('/search', async (req, res) => {
+app.post('/send', async (req, res) => {
     try {
-        res.json(`<p>Output:</p><p>${req.body.text}</p>`);
+        const response = await getOutput(req.body.text);
+        res.json(response);
     } catch (error) {
         console.log('Internal Server Error', error);
     }
